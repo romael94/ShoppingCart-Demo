@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart Royal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">Welcome, User</a>
+
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/mycart">View Cart</a>
+                </li>
+                <li>
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="alert alert-info" th:if="${OutofStockMsg}" th:utext="${OutofStockMsg}"></div>
+
+<h1>Products For Sale</h1>
+<div class="row">
+    <div th:each="product : ${products}" class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100">
+            <a href="#"><img style="width:400px;height:500px;" class="card-img-top" th:src="${product.image}"></a>
+            <div class="card-body">
+                <h4 class="card-title">
+                    <a th:text="${product.name}"></a>
+                </h4>
+                <h5 th:text="'$' + ${product.price}"></h5>
+                <p class="card-text" th:text="'ProductID: ' + ${product.productid}"></p>
+            </div>
+            <div class="card-footer">
+                <a th:href="@{'/mycart/addproduct/{productid}' (productid=${product.productid})}"><button type="button" class="btn btn-primary">Add to Cart</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Romael Simmonds Shopping Cart 2019</p>
+    </div>
+    <!-- /.container -->
+</footer>
+</body>
+</html>

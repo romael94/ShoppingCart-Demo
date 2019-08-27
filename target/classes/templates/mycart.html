@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+
+    td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+
+    tr:nth-child(even) {
+    background-color: #dddddd;
+    }
+    </style>
+
+    <meta charset="UTF-8">
+    <title>Shopping Cart Royal - CART</title>
+
+</head>
+<body>
+<H1>My Cart</H1>
+<div class="alert alert-info" th:if="${OutofStockMsg}" th:utext="${OutofStockMsg}"></div>
+<table>
+    <tr>
+        <th>Product Name</th>
+        <th>Product Price</th>
+        <th>Product Quantity</th>
+    </tr>
+    <tr th:each="product : ${products.entrySet()}">
+        <td th:text="${product.getKey().name}" th:href="@{'/product/' + ${product.getKey().productid}}"></td>
+        <td th:text="'$' + ${product.getKey().price}"></td>
+        <td th:text="${product.getValue()}"></td>
+        <td><a th:href="@{'/mycart/removeproduct/{productid}' (productid=${product.getKey().productid})}"><button type="button" class="btn btn-primary">Remove</button></a></td><br>
+    </tr>
+</table>
+<h2>Total: $[[${cartTotal}]]</h2>
+
+<a th:href="@{'/mycart/checkout'}">Checkout</a>
+<a href="/products">Continue Shopping</a>
+</body>
+</html>
